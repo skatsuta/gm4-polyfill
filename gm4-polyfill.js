@@ -68,12 +68,12 @@ if (typeof GM_registerMenuCommand == 'undefined') {
 }
 GM.registerMenuCommand = GM_registerMenuCommand;
 
+GM.info = GM_info;
 
 Object.entries({
   'GM_deleteValue': 'deleteValue',
   'GM_getResourceURL': 'getResourceUrl',
   'GM_getValue': 'getValue',
-  'GM_info': 'info',
   'GM_listValues': 'listValues',
   'GM_notification': 'notification',
   'GM_openInTab': 'openInTab',
@@ -83,7 +83,7 @@ Object.entries({
 }).forEach(([oldKey, newKey]) => {
   let old = this[oldKey];
   if (old) GM[newKey] = function() {
-    new Promise((resolve, reject) => {
+    return new Promise((resolve, reject) => {
       try {
         resolve(old.apply(this, arguments));
       } catch (e) {
